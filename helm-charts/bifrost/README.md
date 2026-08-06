@@ -13,12 +13,9 @@ Official Helm charts for deploying [Bifrost](https://github.com/maximhq/bifrost)
 - Added `traces_enabled` to OTEL config (single-profile and `profiles[*]`). When `false`, no traces are exported and `collector_url` is not required, giving a metrics-only profile. Renders into `traces_enabled`; defaults to `true`.
 - Added `trace_headers` and `metrics_headers` to OTEL config (single-profile and `profiles[*]`). Common `headers` still go to both endpoints; these are overlaid on top for the trace / metrics endpoint respectively (same key wins), e.g. a Databricks table name required only on metrics. Render into `trace_headers` / `metrics_headers`.
 - - Documented `env.VAR_NAME` support for the Datadog plugin service-identity fields `bifrost.plugins.datadog.config.service_name`, `ml_app`, `env`, and `version` (render into `service_name`, `ml_app`, `env`, `version`). Values already passed through; this only adds the env-reference guidance to `values.yaml` comments and `values.schema.json` descriptions.
+- Updated `bifrost.governance.complexityAnalyzerConfig` for semantic Complexity Router configuration: set an embedding provider and model, add reference phrases for Simple, Medium, and Complex, and choose `embedded` or `vector_store` phrase storage. Bifrost detects the embedding dimension during warmup. Legacy four-tier lists remain valid: Simple stays Simple, Code and Technical merge into Medium, and Reasoning merges into Complex. `tier_boundaries` are retained for compatibility but do not affect semantic routing. Renders into `governance.complexity_analyzer_config`.
+- Added `vectorStore.type: chromem` plus a `vectorStore.chromem` block (`path`, `compress`) for the embedded in-process vector store used by semantic complexity routing. Renders into `vector_store.config`.
 - Added `bifrost.guardrails.rules[].target` (`llm` by default or `mcp`) to select whether a guardrail rule applies to LLM traffic or MCP tool calls. Renders into `guardrails_config.guardrail_rules[].target`.
-- **Breaking:** removed `complex_reasoning` from `bifrost.governance.complexityAnalyzerConfig.tier_boundaries` — the COMPLEX and REASONING tiers are merged, so boundaries are now just `simple_medium` (default `0.20`) and `medium_complex` (default `0.40`; scores at or above it are COMPLEX). Values files that still set `complex_reasoning` fail schema validation; delete the field before upgrading. Renders into `governance.complexity_analyzer_config.tier_boundaries`.
-- Added `bifrost.setupToken` (accepts a literal, `env.<VAR>`, or `vault.<path>`) plus `bifrost.setupTokenSecret` (`name`/`key`, injects `BIFROST_SETUP_TOKEN` via secretKeyRef and renders `setup_token: "env.BIFROST_SETUP_TOKEN"`) — the operator-provisioned bootstrap secret required to create the first admin account. Renders into the top-level `setup_token`.
-- Added `bifrost.server.pluginDownloadPrivateAllowlist` (hostnames, IPs, or CIDR ranges) to let custom plugin (`.so`) downloads reach trusted internal artifact hosts that resolve to private/loopback/link-local/CGNAT addresses, which are blocked by default to prevent SSRF. Renders into `server.plugin_download_private_allowlist`.
-- `storage.logsStore.matviewRefreshInterval` now accepts `"off"` or a zero duration (e.g. `"0s"`) to disable materialized-view maintenance entirely (dashboard queries fall back to the raw tables); positive values below `5s` are clamped up to `5s` instead of rejected.
-- Added `user_id` to `bifrost.governance.pricingOverrides[]` for user-scoped pricing overrides. Renders into `governance.pricing_overrides[].user_id`.
 
 
 ### 2.1.34
@@ -38,8 +35,6 @@ Official Helm charts for deploying [Bifrost](https://github.com/maximhq/bifrost)
 - Added `storage.logsStore.matviewRefreshTimeout` (Go duration, min 30s, max 30m; unset derives 5× the refresh interval, at least 5m) to bound a single materialized-view refresh pass. Renders into `logs_store.matview_refresh_timeout`.
 - Added `bifrost.plugins.otel.config.export_timeout` (seconds, 1–60, default 5) to bound a single trace export — the only timeout on gRPC exports. Renders into the OTEL plugin config's `export_timeout` (also wired the field through `_helpers.tpl`), and is omitted from the generated config when unset (or `0`).
 - Added `postgresql.external.passwordCommand.cache_ttl` (Go duration, default 60s) to control how long a resolved password is reused across new physical connections instead of re-running the command per connection. Passes through into `password_command.cache_ttl`.
-- **Breaking:** removed `complex_reasoning` from `bifrost.governance.complexityAnalyzerConfig.tier_boundaries` — the COMPLEX and REASONING complexity tiers are merged, so boundaries are now just `simple_medium` and `medium_complex` (scores at or above `medium_complex` are COMPLEX). Values files that still set `complex_reasoning` fail schema validation; delete the field before upgrading. Renders into `governance.complexity_analyzer_config.tier_boundaries`.
-- Complexity Router keyword configuration now uses `simple_keywords`, `medium_keywords`, and `complex_keywords`. Existing four-list Helm values remain accepted for upgrades: `code_keywords` and `technical_keywords` are merged into Medium, and `reasoning_keywords` becomes Complex. New values should use the three-list shape.
 
 ### 2.1.31
 
@@ -737,7 +732,7 @@ Bifrost supports multiple vector stores for semantic caching:
 | Parameter             | Description                                              | Default |
 | --------------------- | -------------------------------------------------------- | ------- |
 | `vectorStore.enabled` | Enable vector store                                      | `false` |
-| `vectorStore.type`    | Vector store type: `none`, `weaviate`, `redis`, `qdrant` | `none`  |
+| `vectorStore.type`    | Vector store type: `none`, `weaviate`, `redis`, `qdrant`, `pinecone`, or `chromem` | `none`  |
 
 #### Weaviate
 
