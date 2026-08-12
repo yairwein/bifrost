@@ -268,7 +268,7 @@ export function GovernanceFormFragment({ provider }: GovernanceFormFragmentProps
 						<DottedSeparator />
 						<div className="space-y-4">
 							<Label className="text-sm font-medium">Current Usage</Label>
-							<div className="bg-muted/50 grid grid-cols-2 gap-4 rounded-lg p-4">
+							<div className="bg-muted/50 grid grid-cols-1 gap-4 rounded-lg p-4 md:grid-cols-2">
 								{providerGovernance?.budgets?.map((b) => (
 									<div key={b.id} className="space-y-1">
 										<p className="text-muted-foreground text-xs">Budget ({b.reset_duration})</p>

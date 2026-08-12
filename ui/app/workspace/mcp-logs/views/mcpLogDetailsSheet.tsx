@@ -247,7 +247,7 @@ export function MCPLogDetailSheet({
 				<div className="space-y-4 rounded-sm border px-6 py-4">
 					<div className="space-y-4">
 						<BlockHeader title="Timings" />
-						<div className="grid w-full grid-cols-3 items-center justify-between gap-4">
+						<div className="grid w-full grid-cols-1 items-center justify-between gap-4 md:grid-cols-3">
 							<LogEntryDetailsView
 								className="w-full"
 								label="Start Timestamp"
@@ -276,7 +276,7 @@ export function MCPLogDetailSheet({
 					<DottedSeparator />
 					<div className="space-y-4">
 						<BlockHeader title="Request Details" />
-						<div className="grid w-full grid-cols-3 items-start justify-between gap-4">
+						<div className="grid w-full grid-cols-1 items-start justify-between gap-4 md:grid-cols-3">
 							<LogEntryDetailsView
 								className="col-span-2 w-full"
 								label="Tool Name"
@@ -400,7 +400,7 @@ export function MCPLogDetailSheet({
 						{displayLog.metadata && Object.keys(displayLog.metadata).length > 0 && (
 							<div className="space-y-4 rounded-sm border px-6 py-4">
 								<BlockHeader title="Metadata" />
-								<div className="grid w-full grid-cols-3 items-start justify-between gap-4">
+								<div className="grid w-full grid-cols-1 items-start justify-between gap-4 md:grid-cols-3">
 									{Object.entries(displayLog.metadata).map(([key, value]) => (
 										<LogEntryDetailsView key={key} className="w-full" label={key} value={String(value)} />
 									))}

@@ -156,7 +156,7 @@ export default function VirtualKeyDetailSheet({
 						<h3 className="font-semibold">Basic Information</h3>
 
 						<div className="grid gap-4">
-							<div className="grid grid-cols-3 items-center gap-4">
+							<div className="grid grid-cols-1 items-center gap-4 md:grid-cols-3">
 								<span className="text-muted-foreground text-sm">Status</span>
 								<div className="col-span-2">
 									{(() => {
@@ -169,7 +169,7 @@ export default function VirtualKeyDetailSheet({
 							</div>
 
 							{virtualKey.expires_at && (
-								<div className="grid grid-cols-3 items-center gap-4">
+								<div className="grid grid-cols-1 items-center gap-4 md:grid-cols-3">
 									<span className="text-muted-foreground text-sm">Expires</span>
 									<div className="col-span-2 text-sm">
 										{formatDistanceToNow(new Date(virtualKey.expires_at), {
@@ -180,7 +180,7 @@ export default function VirtualKeyDetailSheet({
 								</div>
 							)}
 
-							<div className="grid grid-cols-3 items-center gap-4">
+							<div className="grid grid-cols-1 items-center gap-4 md:grid-cols-3">
 								<span className="text-muted-foreground text-sm">Created</span>
 								<div className="col-span-2 text-sm">
 									{formatDistanceToNow(new Date(virtualKey.created_at), {
@@ -189,7 +189,7 @@ export default function VirtualKeyDetailSheet({
 								</div>
 							</div>
 
-							<div className="grid grid-cols-3 items-center gap-4">
+							<div className="grid grid-cols-1 items-center gap-4 md:grid-cols-3">
 								<span className="text-muted-foreground text-sm">Last Updated</span>
 								<div className="col-span-2 text-sm">
 									{formatDistanceToNow(new Date(virtualKey.updated_at), {
@@ -199,7 +199,7 @@ export default function VirtualKeyDetailSheet({
 							</div>
 
 							{entityInfo.type !== "None" && (
-								<div className="grid grid-cols-3 items-center gap-4">
+								<div className="grid grid-cols-1 items-center gap-4 md:grid-cols-3">
 									<span className="text-muted-foreground text-sm">Assigned To</span>
 									<div className="col-span-2 flex items-center gap-2">
 										<Badge variant={entityInfo.type === "None" ? "outline" : "secondary"}>{entityInfo.type}</Badge>
@@ -236,7 +236,7 @@ export default function VirtualKeyDetailSheet({
 
 											{/* Basic Config */}
 											<div className="space-y-3">
-												<div className="grid grid-cols-3 items-start gap-4">
+												<div className="grid grid-cols-1 items-start gap-4 md:grid-cols-3">
 													<span className="text-muted-foreground pt-0.5 text-sm font-medium">Allowed Models</span>
 													<div className="col-span-2">
 														{config.allowed_models?.includes("*") ? (
@@ -259,7 +259,7 @@ export default function VirtualKeyDetailSheet({
 													</div>
 												</div>
 
-												<div className="grid grid-cols-3 items-start gap-4">
+												<div className="grid grid-cols-1 items-start gap-4 md:grid-cols-3">
 													<span className="text-muted-foreground pt-0.5 text-sm font-medium">Blocked Models</span>
 													<div className="col-span-2">
 														{config.blacklisted_models?.includes("*") ? (
@@ -282,7 +282,7 @@ export default function VirtualKeyDetailSheet({
 													</div>
 												</div>
 
-												<div className="grid grid-cols-3 items-start gap-4">
+												<div className="grid grid-cols-1 items-start gap-4 md:grid-cols-3">
 													<span className="text-muted-foreground pt-0.5 text-sm font-medium">Allowed Keys</span>
 													<div className="col-span-2">
 														{config.allow_all_keys ? (

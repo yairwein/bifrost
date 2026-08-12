@@ -214,7 +214,7 @@ export function WebhookDetailsSheet({ endpoint, isTesting, canManage, onTest, on
 				</SheetHeader>
 
 				<div className="space-y-4 rounded-sm border p-4">
-					<div className="grid grid-cols-3 gap-4">
+					<div className="grid grid-cols-1 gap-4 md:grid-cols-3">
 						<DetailEntry
 							label="Events"
 							value={

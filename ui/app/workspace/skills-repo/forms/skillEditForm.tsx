@@ -12,6 +12,7 @@ import { ScrollArea, ScrollBar } from "@/components/ui/scrollArea";
 import { Textarea } from "@/components/ui/textarea";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { useCopyToClipboard } from "@/hooks/useCopyToClipboard";
+import { useIsMobile } from "@/hooks/use-mobile";
 import type { SkillFileEntry } from "@/lib/types/skills";
 import { cn } from "@/lib/utils";
 import { validateSkillForm, validateVersionBump } from "@/lib/validators/skills";
@@ -45,6 +46,7 @@ export function SkillEditView({
 	isSaving: boolean;
 	mode?: "edit" | "create";
 }) {
+	const isMobile = useIsMobile();
 	const isCreate = mode === "create";
 	const [bodyTab, setBodyTab] = useState<"edit" | "preview">("edit");
 	const [showPreviewDialog, setShowPreviewDialog] = useState(false);
@@ -255,7 +257,7 @@ export function SkillEditView({
 
 			{/* Files + SKILL.md two-pane workspace */}
 			<div className="min-h-0 flex-1 px-4 pt-4">
-				<ResizablePanelGroup direction="horizontal" className="h-full min-h-0">
+				<ResizablePanelGroup direction={isMobile ? "vertical" : "horizontal"} className="h-full min-h-0">
 					{/* Left: files panel */}
 					<ResizablePanel defaultSize="28%" minSize="18%" maxSize="50%" className="bg-card flex min-h-0 flex-col gap-2">
 						<p className="text-muted-foreground/70 px-1 text-[10px] font-semibold tracking-wider uppercase">Details</p>
@@ -316,7 +318,7 @@ export function SkillEditView({
 						</div>
 					</ResizablePanel>
 
-					<ResizableHandle className="mx-1.5 bg-transparent" />
+					<ResizableHandle className="mx-1.5 hidden bg-transparent md:flex" />
 
 					{/* Right: editor for the selected item */}
 					<ResizablePanel defaultSize="72%" minSize="30%" className="flex min-h-0 flex-col overflow-auto">
@@ -652,7 +654,7 @@ function DetailsEditorPane({
 					</FormSection>
 
 					<FormSection title="Spec Fields">
-						<div className="grid grid-cols-3 gap-4">
+						<div className="grid grid-cols-1 gap-4 md:grid-cols-3">
 							<div className="flex flex-col gap-1">
 								<Label className="text-muted-foreground text-xs">License</Label>
 								<Input

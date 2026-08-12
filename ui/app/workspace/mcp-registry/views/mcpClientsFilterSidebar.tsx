@@ -3,6 +3,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import { Input } from "@/components/ui/input";
 import { ScrollArea } from "@/components/ui/scrollArea";
+import { useIsMobile } from "@/hooks/use-mobile";
 import { useGetVirtualKeysQuery } from "@/lib/store";
 import { cn } from "@/lib/utils";
 import { ChevronDown, LoaderCircle, PanelLeftClose, PanelLeftOpen, RotateCcw, Search } from "lucide-react";
@@ -89,13 +90,18 @@ interface SidebarProps {
 // ---------------------------------------------------------------------------
 
 export function MCPClientsFilterSidebar({ filters, onFiltersChange }: SidebarProps) {
+	const isMobile = useIsMobile();
 	const [collapsed, setCollapsed] = useState(false);
 
 	useEffect(() => {
 		if (typeof window === "undefined") return;
+		if (isMobile) {
+			setCollapsed(true);
+			return;
+		}
 		const stored = window.localStorage.getItem(COLLAPSE_STORAGE_KEY);
-		if (stored === "true") setCollapsed(true);
-	}, []);
+		setCollapsed(stored === "true");
+	}, [isMobile]);
 
 	const toggleCollapsed = useCallback(() => {
 		setCollapsed((prev) => {
@@ -128,15 +134,15 @@ export function MCPClientsFilterSidebar({ filters, onFiltersChange }: SidebarPro
 			<button
 				type="button"
 				onClick={toggleCollapsed}
-				className="bg-card group flex h-full w-10 shrink-0 cursor-pointer flex-col items-center gap-3 rounded-r-md py-4 text-sm font-medium"
+				className="bg-card group fixed top-[200px] left-2 z-30 flex h-10 w-10 shrink-0 cursor-pointer flex-row items-center justify-center gap-0 rounded-md p-0 text-sm font-medium shadow-lg md:static md:h-full md:flex-col md:justify-start md:gap-3 md:rounded-r-md md:rounded-l-none md:py-4 md:shadow-none"
 				title="Show filters"
 				aria-label="Show filters"
 				data-testid="mcpClientsFilterSidebar-toggle-show"
 			>
 				<PanelLeftOpen className="text-muted-foreground group-hover:text-foreground size-4 transition-colors" />
-				<span className="rotate-180 select-none [writing-mode:vertical-rl]">Filters</span>
+				<span className="hidden rotate-180 select-none [writing-mode:vertical-rl] md:block">Filters</span>
 				{activeFilterCount > 0 && (
-					<span className="bg-primary/10 text-primary flex size-6 items-center justify-center rounded-full text-xs font-medium">
+					<span className="bg-primary text-primary-foreground absolute -top-1 -right-1 flex size-5 items-center justify-center rounded-full text-[10px] font-medium md:static md:size-6 md:bg-primary/10 md:text-xs md:text-primary">
 						{activeFilterCount}
 					</span>
 				)}
@@ -145,7 +151,7 @@ export function MCPClientsFilterSidebar({ filters, onFiltersChange }: SidebarPro
 	}
 
 	return (
-		<div className="bg-card flex h-full w-64 shrink-0 flex-col rounded-r-md">
+		<div className="bg-card fixed inset-y-2 left-2 z-40 flex h-auto w-[calc(100vw-1rem)] max-w-72 shrink-0 flex-col rounded-md border shadow-xl md:static md:h-full md:w-64 md:max-w-none md:rounded-r-md md:rounded-l-none md:border-0 md:shadow-none">
 			<div className="flex h-11 items-center justify-between border-b pr-2 pl-5">
 				<span className="text-sm font-semibold">Filters</span>
 				<div className="flex items-center gap-1">

@@ -897,7 +897,7 @@ export function LogDetailView({
 						<span className="uppercase">{log.provider}</span>
 					</div>
 				</div>
-				<div className="border-border grid grid-cols-2 border-t md:grid-cols-5">
+				<div className="border-border grid grid-cols-1 border-t sm:grid-cols-2 md:grid-cols-5">
 					<HeroStat
 						label="Latency"
 						valueClass="text-primary"
@@ -975,7 +975,7 @@ export function LogDetailView({
 				<div className="space-y-4 border-t px-6 py-4">
 					<div className="space-y-4">
 						<BlockHeader title="Timings" />
-						<div className="grid w-full grid-cols-3 items-center justify-between gap-4">
+						<div className="grid w-full grid-cols-1 items-center justify-between gap-4 md:grid-cols-3">
 							<LogEntryDetailsView
 								className="w-full"
 								label="Start Timestamp"
@@ -1002,7 +1002,7 @@ export function LogDetailView({
 					<DottedSeparator />
 					<div className="space-y-4">
 						<BlockHeader title="Request Details" />
-						<div className="grid w-full grid-cols-3 items-start justify-between gap-4">
+						<div className="grid w-full grid-cols-1 items-start justify-between gap-4 md:grid-cols-3">
 							<LogEntryDetailsView
 								className="w-full"
 								label="Provider"
@@ -1394,7 +1394,7 @@ export function LogDetailView({
 							<DottedSeparator />
 							<div className="space-y-4">
 								<BlockHeader title="Tokens" />
-								<div className="grid w-full grid-cols-3 items-center justify-between gap-4">
+								<div className="grid w-full grid-cols-1 items-center justify-between gap-4 md:grid-cols-3">
 									<LogEntryDetailsView className="w-full" label="Input Tokens" value={log.token_usage?.prompt_tokens || "-"} />
 									<LogEntryDetailsView className="w-full" label="Output Tokens" value={log.token_usage?.completion_tokens || "-"} />
 									<LogEntryDetailsView className="w-full" label="Total Tokens" value={log.token_usage?.total_tokens || "-"} />
@@ -1508,7 +1508,7 @@ export function LogDetailView({
 										<DottedSeparator />
 										<div className="space-y-4">
 											<BlockHeader title="Reasoning Parameters" />
-											<div className="grid w-full grid-cols-3 items-center justify-between gap-4">
+											<div className="grid w-full grid-cols-1 items-center justify-between gap-4 md:grid-cols-3">
 												{reasoning.effort && (
 													<LogEntryDetailsView
 														className="w-full"
@@ -1553,7 +1553,7 @@ export function LogDetailView({
 									<DottedSeparator />
 									<div className="space-y-4">
 										<BlockHeader title={`Caching Details (${log.cache_debug.cache_hit ? "Hit" : "Miss"})`} />
-										<div className="grid w-full grid-cols-3 items-center justify-between gap-4">
+										<div className="grid w-full grid-cols-1 items-center justify-between gap-4 md:grid-cols-3">
 											{log.cache_debug.cache_hit ? (
 												<>
 													<LogEntryDetailsView
@@ -1712,7 +1712,7 @@ export function LogDetailView({
 								<DottedSeparator />
 								<div className="space-y-4">
 									<BlockHeader title="Metadata" />
-									<div className="grid w-full grid-cols-3 items-start justify-between gap-4">
+									<div className="grid w-full grid-cols-1 items-start justify-between gap-4 md:grid-cols-3">
 										{Object.entries(log.metadata)
 											.filter(([key]) => {
 												if (key === "isAsyncRequest") return false;

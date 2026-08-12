@@ -208,7 +208,7 @@ export default function AttributeSheet({ model, overrides, onClose }: AttributeS
 				<div className="flex h-full flex-col gap-6">
 					<div className="grow space-y-4 px-8">
 						{/* Read-only provider / model header */}
-						<div className="grid grid-cols-2 gap-4">
+						<div className="grid grid-cols-1 gap-4 md:grid-cols-2">
 							<div>
 								<Label className="text-sm font-medium">Provider</Label>
 								<div className="bg-muted/30 mt-2 flex items-center gap-2 rounded-sm border px-3 py-2 text-sm">
@@ -245,7 +245,7 @@ export default function AttributeSheet({ model, overrides, onClose }: AttributeS
 									</span>
 								)}
 							</div>
-							<div className="grid grid-cols-2 gap-4">
+							<div className="grid grid-cols-1 gap-4 md:grid-cols-2">
 								<div className="bg-muted/30 rounded-sm border px-3 py-2">
 									<p className="text-muted-foreground text-xs">Input</p>
 									<p className="mt-1 font-mono text-sm" data-testid="model-catalog-input-cost">

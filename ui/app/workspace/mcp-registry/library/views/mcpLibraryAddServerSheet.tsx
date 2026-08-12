@@ -219,7 +219,7 @@ export function MCPLibraryAddServerSheet({ open, onClose }: MCPLibraryAddServerS
 						)}
 
 						{/* Auth + category */}
-						<div className="grid grid-cols-2 gap-3">
+						<div className="grid grid-cols-1 gap-3 md:grid-cols-2">
 							<div className="w-full space-y-2">
 								<Label>Authentication</Label>
 								<Select value={authType} onValueChange={(v) => setValue("auth_type", v as MCPAuthType)}>
@@ -255,7 +255,7 @@ export function MCPLibraryAddServerSheet({ open, onClose }: MCPLibraryAddServerS
 						)}
 
 						{/* Optional metadata */}
-						<div className="grid grid-cols-2 gap-3">
+						<div className="grid grid-cols-1 gap-3 md:grid-cols-2">
 							<div className="space-y-2">
 								<Label htmlFor="mcp-add-icon">Icon URL</Label>
 								<Input id="mcp-add-icon" placeholder="https://..." data-testid="mcp-add-icon-input" {...register("icon_url")} />

@@ -260,7 +260,7 @@ export default function MCPLibraryPage() {
 										<h1 className="text-muted-foreground text-xl font-medium">
 											{isCatalogEmpty ? "No synced servers yet" : "No servers found"}
 										</h1>
-										<div className="text-muted-foreground mx-auto mt-2 max-w-[600px] text-sm font-normal">
+										<div className="text-muted-foreground mx-auto mt-2 w-full max-w-[600px] text-sm font-normal">
 											{isCatalogEmpty
 												? "Configure the library sync source in Settings to populate this catalog."
 												: "Try adjusting your search or filters."}
